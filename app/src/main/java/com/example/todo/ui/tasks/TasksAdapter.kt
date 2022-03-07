@@ -9,9 +9,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.data.Task
 import com.example.todo.databinding.ItemTaskBinding
 
-class TasksAdapter : ListAdapter<Task, TasksAdapter.Vh>(DiffUtilCallback) {
+class TasksAdapter(val listener: OnItemClickListener) :
+  ListAdapter<Task, TasksAdapter.Vh>(DiffUtilCallback) {
 
-  class Vh(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+  inner class Vh(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+      binding.apply {
+        root.setOnClickListener {
+          val position = absoluteAdapterPosition
+          if (position != RecyclerView.NO_POSITION) {
+            val task = getItem(position)
+            listener.onItemClick(task)
+          }
+        }
+        checkboxTask.setOnClickListener {
+          val position = absoluteAdapterPosition
+          if (position != RecyclerView.NO_POSITION) {
+            val task = getItem(position)
+            listener.onTaskCheckBoxClick(task, checkboxTask.isChecked)
+          }
+        }
+      }
+    }
+
     fun bind(task: Task) {
       binding.apply {
         checkboxTask.isChecked = task.completed
@@ -20,6 +41,11 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.Vh>(DiffUtilCallback) {
         labelPriority.isVisible = task.importance
       }
     }
+  }
+
+  interface OnItemClickListener {
+    fun onItemClick(task: Task)
+    fun onTaskCheckBoxClick(task: Task, isChecked: Boolean)
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = Vh(

@@ -32,7 +32,7 @@ android {
     }
 
     //bindings
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
     //noinspection DataBindingWithoutKapt
@@ -56,6 +56,7 @@ dependencies {
     implementation libs.fragmentKtx
     implementation libs.lifecycleLiveDataKtx
     implementation libs.lifecycleViewmodelKtx
+    implementation libs.viewModelSavedState
     implementation libs.navigationRuneTimeKtx
     implementation libs.navigationFragmentKtx
     implementation libs.roomKtx
@@ -66,9 +67,7 @@ dependencies {
     implementation libs.coroutinesAndroid
     implementation libs.coroutinesCore
     implementation libs.datastore
-    implementation libs.datastoreCore
     implementation libs.fragmentBindingDelegate
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.1'
 
 
     testImplementation 'junit:junit:4.+'

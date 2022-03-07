@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-
 const val DB_VERSION = 3
 const val DB_NAME = "TODO_DATA"
 
@@ -27,16 +26,7 @@ abstract class TaskDatabase : RoomDatabase() {
     override fun onCreate(db: SupportSQLiteDatabase) {
       super.onCreate(db)
       val dao = database.get().taskDao()
-      applicationScope.launch {
-        dao.insert(Task("Wash the dishes"))
-        dao.insert(Task("Do the laundry"))
-        dao.insert(Task("Buy groceries", importance = true))
-        dao.insert(Task("Prepare food", completed = true))
-        dao.insert(Task("Call mom"))
-        dao.insert(Task("Visit grandma", completed = true))
-        dao.insert(Task("Repair my bike"))
-        dao.insert(Task("Call Elon Musk"))
-      }
+
     }
   }
 }
